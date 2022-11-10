@@ -10,18 +10,18 @@ export default function Home() {
       <span className='text-slate-400'>Meus links</span>
 
       <main className='flex flex-col max-w-xl w-10/12 gap-5 text-center'>
-        <section className='bg-white hover:bg-red-600 hover:text-white w-full rounded py-2 hover:scale-105 transition'>
-          <a href='#'>
+        <section className='flex justify-center items-center bg-white hover:bg-red-600 hover:text-white w-full rounded py-2 hover:scale-105 transition'>
+          <a href='/'>
             <span className='text-lg'>Canal do Youtube</span>
           </a>
         </section>
         <section className='bg-white w-full rounded py-2  hover:scale-105 transition hover:bg-black hover:text-white'>
-          <a href='#'>
+          <a href='/'>
             <span className='text-lg'>Tik Tok</span>
           </a>
         </section>
         <section className='bg-white w-full hover:bg-indigo-500 hover:text-white rounded py-2 hover:scale-105 transition'>
-          <a href='#'>
+          <a href='/'>
             <span className='text-lg'>Canal do Discord</span>
           </a>
         </section>
