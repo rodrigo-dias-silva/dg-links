@@ -4,6 +4,7 @@ import Home from './pages/Home/index';
 import Login from './pages/Login/index';
 import Admin from './pages/Admin/index';
 import Error from "./pages/Error";
+import Private from './routes/Private';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <Admin />
+    element: <Private><Admin /></Private>
   },
   {
     path: '*',
