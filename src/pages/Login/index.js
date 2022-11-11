@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from '../../components/Button'
+import { Button } from '../../components/Button'
 import Input from '../../components/Input'
 import Logo from '../../components/Logo'
 
@@ -19,7 +19,7 @@ export default function Login() {
     e.preventDefault();
 
     if (email === '' || password === '') {
-      alert('Preencha todos os campos!')
+      toast.error('Preencha todos os campos!')
       return;
     }
 
@@ -34,22 +34,22 @@ export default function Login() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen py-4 gap-10'>
+    <div className='flex flex-col items-center justify-center min-h-screen px-8'>
       <Logo />
       <form
         className='flex flex-col items-center w-full gap-4'
         onSubmit={handleLogin}
       >
         <Input
-          type={'email'}
-          placeholder={'Digite aqui o seu email'}
+          type='email'
+          placeholder='Digite aqui o seu email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
-          type={'password'}
-          placeholder={'*******'}
-          autoComplete={'on'}
+          type='password'
+          placeholder='*******'
+          autoComplete='on'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
