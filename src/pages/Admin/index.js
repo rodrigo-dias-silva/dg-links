@@ -1,22 +1,53 @@
-import React, { useState } from 'react'
-import Header from '../../components/Header'
+import React, { useEffect, useState } from 'react'
+import { FiTrash2 } from 'react-icons/fi'
+import { toast } from 'react-toastify';
 
+import Header from '../../components/Header'
 import Logo from './../../components/Logo';
 import Input from './../../components/Input';
 import { ButtonLink } from './../../components/Button';
 
-import { FiTrash2 } from 'react-icons/fi'
-
 import { db } from '../../services/firebaseConnection';
 
-import { addDoc, collection, onSnapshot, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  doc,
+  deleteDoc
+} from 'firebase/firestore';
 
 export default function Admin() {
   const [nameInput, setNameInput] = useState('');
   const [urlInput, setUrlInput] = useState('');
-  const [bgColorInput, setBgColorInput] = useState('#f1f1f1')
-  const [textColorInput, setTextColorInput] = useState('#131313')
+  const [bgColorInput, setBgColorInput] = useState('#f1f1f1');
+  const [textColorInput, setTextColorInput] = useState('#131313');
+
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+
+    const linksRef = collection(db, 'links')
+    const queryRef = query(linksRef, orderBy('created', 'asc'))
+
+    onSnapshot(queryRef, (snapshot) => {
+      let list = [];
+
+      snapshot.forEach((doc) => {
+        list.push({
+          id: doc.id,
+          name: doc.data().name,
+          url: doc.data().url,
+          bg: doc.data().bg,
+          color: doc.data().color
+        })
+      })
+
+      setLinks(list)
+    })
+  }, [])
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -43,8 +74,13 @@ export default function Admin() {
       })
   }
 
+  async function handleDeleteLink(id) {
+    const docRef = doc(db, 'links', id)
+    await deleteDoc(docRef)
+  }
+
   return (
-    <div className='flex items-center flex-col min-h-screen px-4'>
+    <div className='flex items-center flex-col min-h-screen px-4 pb-7'>
       <Header />
       <Logo />
 
@@ -108,17 +144,22 @@ export default function Admin() {
         Meus links
       </span>
 
-      <article
-        className='w-11/12 max-w-xl flex items-center rounded px-3 py-3 justify-between animate-[pulse_2s_ease-in-out]'
-        style={{ backgroundColor: '#000', color: '#fff' }}
-      >
-        <span>Grupo exclusivo no Telegram</span>
-        <div>
-          <button className='border border-dashed border-white py-1 px-2 bg-black rounded'>
-            <FiTrash2 size={18} color='#fff' />
-          </button>
-        </div>
-      </article>
+      {links.map((item, index) => (
+        <article
+          key={index}
+          className='w-11/12 max-w-xl flex items-center rounded px-3 py-3 justify-between animate-[pulse_2s_ease-in-out] mb-4'
+          style={{ backgroundColor: item.bg, color: item.color }}
+        >
+          <span>{item.name}</span>
+          <div>
+            <button
+              onClick={() => handleDeleteLink(item.id)}
+              className='border border-dashed border-white py-2 px-2 bg-slate-800 rounded-full'>
+              <FiTrash2 size={18} color='#fff' />
+            </button>
+          </div>
+        </article>
+      ))}
     </div>
   )
 }
