@@ -14,27 +14,32 @@ export default function Header() {
 
   return (
     <header className='w-full max-w-2xl mt-4'>
-      <nav className='w-full bg-white h-12 flex justify-between px-3 items-center rounded'>
-        <button
-          onClick={handleLogout}
-          className='bg-transparent'
-        >
-          <BiLogOut size={28} color='#db2629' />
-        </button>
+      <nav className='w-full bg-white h-12 flex justify-between items-center rounded'>
+        <div className='flex justify-start px-3 flex-1'>
+          <button
+            onClick={handleLogout}
+            className='bg-transparent'
+          >
+            <BiLogOut size={28} color='#db2629' />
+          </button>
+        </div>
 
-        <Link
-          className='text-slate-800 hover:text-yellow-500 transition'
-          to='/admin'
-        >
-          Links
-        </Link>
+        <div className='flex flex-1 justify-evenly items-center'>
 
-        <Link
-          className='text-slate-800 hover:text-yellow-500 transition pr-1'
-          to='/admin/social'
-        >
-          Redes sociais
-        </Link>
+          <Link
+            className='text-slate-800 hover:text-yellow-500 transition'
+            to='/'
+          >
+            Início
+          </Link>
+
+          <Link
+            className='text-slate-800 hover:text-yellow-500 transition'
+            to='/admin'
+          >
+            Links
+          </Link>
+        </div>
 
       </nav>
     </header>
