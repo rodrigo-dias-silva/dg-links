@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from 'react'
 
 import { getDocs, collection, orderBy, query } from 'firebase/firestore'
+import { getDownloadURL, ref } from 'firebase/storage'
 
-import { db } from '../../services/firebaseConnection'
-
-import img from '../../assets/404.gif'
-import Header from './../../components/Header/index';
+import { db, storage } from '../../services/firebaseConnection'
 import Logo from './../../components/Logo/index';
+import { Avatar } from '@mui/material';
 
 export default function Home() {
 
   const [links, setLinks] = useState([])
+  const [imgUrl, setImgUrl] = useState(null)
 
   useEffect(() => {
+
+    function loadImg() {
+      const imgRef = ref(storage, 'image')
+
+      getDownloadURL(imgRef)
+        .then((url) => {
+          setImgUrl(url)
+        })
+        .catch((error) => {
+          console.log('Erro ao obter a URL da foto de perfil do usuário ', error.message);
+        })
+    }
+
+    loadImg()
+
     function loadLinks() {
       const linksRef = collection(db, 'links')
       const queryRef = query(linksRef, orderBy('created', 'asc'))
@@ -42,13 +57,19 @@ export default function Home() {
   return (
     <div className='scrollbar-hide min-h-screen'>
 
-      <div className='w-full flex-1 flex justify-center items-center px-4'>
+      {/* <div className='w-full flex-1 flex justify-center items-center px-4'>
         <Header />
-      </div>
+      </div> */}
 
-      <div className='mt-20 w-full min-h-[600px] md:h-3/4 flex flex-1 flex-col  items-center gap-5'>
+      <div className='pt-32 w-full min-h-[600px] md:h-3/4 flex flex-1 flex-col  items-center gap-5'>
 
-        <img src={img} alt='foto da pessoa' className='w-40 h-40  rounded-full border-2 border-white bg-center shadow-md' />
+        <div>
+          <Avatar
+            alt="Foto de perfil do usuário"
+            src={imgUrl}
+            sx={{ width: 160, height: 160 }}
+          />
+        </div>
 
         <h1 className='text-white text-2xl'>@digle.silva</h1>
 
@@ -72,7 +93,7 @@ export default function Home() {
         </main>
       </div>
 
-      <footer className='mt-12'>
+      <footer className='fixed bottom-0 left-1/2 right-1/2 mt-12'>
         <div className='flex justify-center items-center'>
           <Logo />
         </div>
