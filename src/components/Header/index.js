@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className='w-full max-w-2xl mt-4'>
       <nav className='w-full bg-white h-12 flex justify-between items-center rounded'>
-        <div className='flex justify-start px-3 flex-1'>
+        <div className='flex justify-start px-3'>
           <button
             onClick={handleLogout}
             className='bg-transparent'
@@ -24,7 +24,7 @@ export default function Header() {
           </button>
         </div>
 
-        <div className='flex flex-1 justify-evenly items-center'>
+        <div className='flex flex-auto justify-end gap-10 items-center pr-3'>
 
           <Link
             className='text-slate-800 hover:text-yellow-500 transition'
@@ -38,6 +38,12 @@ export default function Header() {
             to='/admin'
           >
             Links
+          </Link>
+          <Link
+            className='text-slate-800 hover:text-yellow-500 transition mr-3'
+            to='/profile'
+          >
+            Perfil
           </Link>
         </div>
 
