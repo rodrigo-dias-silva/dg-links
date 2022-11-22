@@ -82,11 +82,10 @@ export default function Admin() {
   return (
     <div className='flex items-center flex-col min-h-screen px-4 pb-7'>
       <Header />
-      <Logo />
 
       <form
         onSubmit={handleRegister}
-        className='flex flex-col gap-4 max-w-xl w-full px-5'
+        className='flex flex-col gap-4 max-w-xl w-full px-5 mt-20'
       >
         <label className='font-medium text-white'>Nome do link</label>
         <Input
@@ -160,6 +159,7 @@ export default function Admin() {
           </div>
         </article>
       ))}
+      <Logo />
     </div>
   )
 }
