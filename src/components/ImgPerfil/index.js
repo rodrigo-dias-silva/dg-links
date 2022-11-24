@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Avatar from '@mui/material/Avatar'
 
@@ -35,8 +35,26 @@ export default function ImgPerfil() {
       })
   }
 
+  useEffect(() => {
+
+    function loadImg() {
+      const imgRef = ref(storage, 'image')
+
+      getDownloadURL(imgRef)
+        .then((url) => {
+          setUrl(url)
+        })
+        .catch((error) => {
+          console.log('Erro ao obter a URL da foto de perfil do usuário ', error.message);
+        })
+    }
+
+    loadImg()
+
+  }, [])
+
   return (
-    <div className='flex flex-col justify-center items-center gap-5'>
+    <div className='flex flex-col justify-center items-center gap-5 w-full'>
       <Avatar
         alt="Remy Sharp"
         src={url}
@@ -45,17 +63,22 @@ export default function ImgPerfil() {
       <input
         type="file"
         onChange={handleImageChange}
-        className='block w-full text-sm text-slate-400
+        className='flex items-center w-auto text-sm text-slate-400
         file:mr-4 file:py-2 file:px-4
         file:rounded file:cursor-pointer file:border-0
         file:text-sm file:font-semibold
         file:bg-blue-50 file:text-blue-700
         hover:file:bg-blue-100'
       />
-      <button onClick={handleSubmit}>Enviar</button>
+
+      <button
+        className='w-full max-w-xl h-10 rounded bg-blue-600 hover:bg-blue-400 transition text-white text-lg'
+        onClick={handleSubmit}
+      >
+        Salvar
+      </button>
 
     </div>
 
-    // <img src={img} alt='foto da pessoa' className='w-40 h-40  rounded-full border-2 border-white bg-center shadow-md' />
   )
 }
