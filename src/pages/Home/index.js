@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { getDocs, collection, orderBy, query } from 'firebase/firestore'
+import {
+  getDocs,
+  collection,
+  orderBy,
+  query,
+  getDoc,
+  doc
+} from 'firebase/firestore'
 import { getDownloadURL, ref } from 'firebase/storage'
 
 import { db, storage } from '../../services/firebaseConnection'
@@ -11,6 +18,7 @@ export default function Home() {
 
   const [links, setLinks] = useState([])
   const [imgUrl, setImgUrl] = useState(null)
+  const [nameProf, setNameProf] = useState('Bem vindo!')
 
   useEffect(() => {
 
@@ -27,6 +35,19 @@ export default function Home() {
     }
 
     loadImg()
+
+    function loadName() {
+      const docRef = doc(db, 'profile', 'name')
+      getDoc(docRef)
+        .then((snapshot) => {
+
+          if (snapshot.data() !== undefined) {
+            setNameProf(snapshot.data().profilename)
+          }
+        })
+    }
+
+    loadName()
 
     function loadLinks() {
       const linksRef = collection(db, 'links')
@@ -57,10 +78,6 @@ export default function Home() {
   return (
     <div className='scrollbar-hide min-h-screen'>
 
-      {/* <div className='w-full flex-1 flex justify-center items-center px-4'>
-        <Header />
-      </div> */}
-
       <div className='pt-32 w-full min-h-[600px] md:h-3/4 flex flex-1 flex-col  items-center gap-5'>
 
         <div>
@@ -71,7 +88,7 @@ export default function Home() {
           />
         </div>
 
-        <h1 className='text-white text-2xl'>@digle.silva</h1>
+        <h1 className='text-white text-2xl'>{nameProf}</h1>
 
         <span className='text-slate-400 mt-3'>Meus links</span>
 
@@ -82,9 +99,18 @@ export default function Home() {
             <section
               key={item.id}
               style={{ backgroundColor: item.bg }}
-              className='flex justify-center items-center w-full rounded py-2 hover:scale-105 transition'>
-              <a href={item.url} target='blank' className='w-full'>
-                <span style={{ color: item.color }} className='text-lg'>{item.name}</span>
+              className='flex justify-center items-center w-full rounded-full py-2 hover:scale-105 transition'
+            >
+              <a href={item.url}
+                target='blank'
+                className='w-full'
+              >
+                <span
+                  style={{ color: item.color }}
+                  className='text-lg'
+                >
+                  {item.name}
+                </span>
               </a>
             </section>
 
