@@ -119,7 +119,7 @@ export default function Home() {
         </main>
       </div>
 
-      <footer className='fixed bottom-0 left-1/2 right-1/2 mt-12'>
+      <footer className='mt-12'>
         <div className='flex justify-center items-center'>
           <Logo />
         </div>
