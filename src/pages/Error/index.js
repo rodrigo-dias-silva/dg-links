@@ -18,8 +18,8 @@ export default function Error() {
           Algo deu errado, não encontrei o que você procura...
         </span>
 
-        <Link to={'/'} className='mt-8 bg-zinc-300 px-4 py-1 rounded-lg hover:bg-white transition' >
-          Voltar para a home
+        <Link to={'/'} className='w-full flex items-center justify-center max-w-xl h-10 rounded bg-blue-600 hover:bg-blue-400 transition text-white text-lg mt-5' >
+          Voltar para a Home
         </Link>
       </div>
 
