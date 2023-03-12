@@ -76,11 +76,11 @@ export default function Home() {
   }, [])
 
   return (
-    <div className='scrollbar-hide min-h-screen'>
+    <div className='min-h-screen'>
 
-      <div className='pt-32 w-full min-h-[600px] md:h-3/4 flex flex-1 flex-col  items-center gap-5'>
+      <div className='w-full md:min-h-[600px] md:h-3/4 flex flex-1 flex-col  items-center gap-5'>
 
-        <div>
+        <div className='md:mt-10 mt-5'>
           <Avatar
             alt="Foto de perfil do usuário"
             src={imgUrl}
